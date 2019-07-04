@@ -59,12 +59,8 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Successfully uploaded file")
 }
 
-func helloWorld(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "data")
-}
-
 func serverRequest() {
-	http.HandleFunc("/", helloWorld)
+	http.HandleFunc("/upload", uploadFile)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 func main() {
