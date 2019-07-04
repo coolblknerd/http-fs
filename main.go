@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -28,7 +27,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(10 << 20)
 
 	// FormFile returns the first file for the provided form key.
-	file, handler, err := r.FormFile("test")
+	file, handler, err := r.FormFile("myFile")
 	if err != nil {
 		fmt.Println("Error uploading the file")
 		fmt.Println(err)
@@ -56,12 +55,12 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	tempFile.Write(fileBytes)
 
 	// returns a message to let users know the file was uploaded
-	fmt.Fprintf(w, "Successfully uploaded file")
+	fmt.Fprintf(w, "Successfully uploaded file\n")
 }
 
 func serverRequest() {
 	http.HandleFunc("/upload", uploadFile)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.ListenAndServe(":8080", nil)
 }
 func main() {
 	fmt.Println("This is Reggie")
